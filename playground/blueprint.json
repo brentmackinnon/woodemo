@@ -14,11 +14,17 @@
 	"steps": [
 		{
 			"step": "installTheme",
-			"themeName": "twentytwentyfive"
+			"themeData": {
+				"resource": "wordpress.org/themes",
+				"name": "twentytwentyfive",
+				"activate": false,
+				"files": {}
+			}
 		},
 		{
 			"step": "installTheme",
 			"themeData": {
+				"resource": "local",
 				"name": "twentytwentyfive-child",
 				"activate": true,
 				"files": {
