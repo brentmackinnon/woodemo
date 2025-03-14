@@ -14,10 +14,7 @@
 	"steps": [
 		{
 			"step": "installTheme",
-			"themeZipFile": {
-				"resource": "url",
-				"url": "https://raw.githubusercontent.com/wptrainingteam/playground-demo-handover/main/playground/zips/blue-note.zip"
-			}
+			"themeName": "twentytwentyfive"
 		},
 		{
 			"step": "runPHP",
