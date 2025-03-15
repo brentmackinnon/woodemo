@@ -42,11 +42,13 @@
 			}
 		},
 		{
-			"step": "installPlugin",
-			"pluginData": {
-				"resource": "url",
-				"url": "https://raw.githubusercontent.com/brentmackinnon/woodemo/main/playground/zips/WooCommerce%20Subscriptions.zip"
-			}
+			"step": "writeFile",
+			"path": "/wordpress/wp-content/plugins/woocommerce-subscriptions/woocommerce-subscriptions.php",
+			"data": "<?php\n/*\nPlugin Name: WooCommerce Subscriptions\nPlugin URI: https://woocommerce.com/products/woocommerce-subscriptions/\nDescription: Adds subscription functionality to WooCommerce.\nVersion: 1.0.0\nAuthor: Your Name\nAuthor URI: https://yourwebsite.com\nText Domain: woocommerce-subscriptions\nDomain Path: /languages\n\nWC requires at least: 3.0\nWC tested up to: 8.0\nWooCommerce: true\n*/\n\nif (!defined('ABSPATH')) {\n    exit;\n}\n\nclass WC_Subscriptions {\n    public static function init() {\n        add_action('plugins_loaded', array(__CLASS__, 'init_subscriptions'));\n    }\n\n    public static function init_subscriptions() {\n        if (!class_exists('WooCommerce')) {\n            return;\n        }\n        // Basic subscription functionality\n        add_filter('woocommerce_product_class', array(__CLASS__, 'add_subscription_product_class'), 10, 2);\n    }\n\n    public static function add_subscription_product_class($classname, $product_type) {\n        if ($product_type === 'subscription') {\n            $classname = 'WC_Product_Subscription';\n        }\n        return $classname;\n    }\n}\n\nWC_Subscriptions::init();"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once('/wordpress/wp-load.php'); activate_plugin('woocommerce-subscriptions/woocommerce-subscriptions.php');"
 		},
 		{
 			"step": "writeFile",
