@@ -26,14 +26,17 @@
 		},
 		{
 			"step": "installTheme",
-			"themeZipFile": {
+			"themeData": {
 				"resource": "wordpress.org/themes",
 				"slug": "twentytwentyfive"
+			},
+			"options": {
+				"activate": true
 			}
 		},
 		{
 			"step": "installPlugin",
-			"pluginZipFile": {
+			"pluginData": {
 				"resource": "wordpress.org/plugins",
 				"slug": "woocommerce"
 			}
@@ -79,5 +82,5 @@
 		"networking": true
 	},
 	"login": true,
-	"landingPage": "/"
+	"landingPage": "/wp-admin/"
 }
