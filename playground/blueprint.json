@@ -55,6 +55,10 @@
 		},
 		{
 			"step": "runPHP",
+			"code": "<?php require_once('/wordpress/wp-load.php'); activate_plugin('wc-smooth-generator/wc-smooth-generator.php');"
+		},
+		{
+			"step": "runPHP",
 			"code": "<?php require_once('/wordpress/wp-load.php'); $terms = array('Digital Services' => array('Software Subscriptions', 'Cloud Storage', 'Professional Services'), 'Entertainment' => array('Streaming Services', 'Gaming', 'Educational Content'), 'Business' => array('Team Plans', 'Enterprise Solutions', 'Support Packages')); foreach($terms as $parent => $children) { $parent_term = wp_insert_term($parent, 'product_cat'); if(!is_wp_error($parent_term)) { foreach($children as $child) { wp_insert_term($child, 'product_cat', array('parent' => $parent_term['term_id'])); } } }"
 		},
 		{
