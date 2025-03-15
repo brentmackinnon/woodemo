@@ -45,14 +45,14 @@
 			"step": "installPlugin",
 			"pluginData": {
 				"resource": "url",
-				"url": "https://github-proxy.com/proxy/?repo=brentmackinnon/woodemo/tree/main/plugins/woocommerce-subscriptions"
+				"url": "https://github.com/brentmackinnon/woodemo/blob/main/playground/zips/WooCommerce%20Subscriptions.zip?raw=true"
 			}
 		},
 		{
 			"step": "installPlugin",
 			"pluginData": {
 				"resource": "url",
-				"url": "https://github-proxy.com/proxy/?repo=brentmackinnon/woodemo/tree/main/plugins/WC%20Smooth%20Generator"
+				"url": "https://github.com/brentmackinnon/woodemo/blob/main/playground/zips/WC%20Smooth%20Generator.zip?raw=true"
 			}
 		},
 		{
