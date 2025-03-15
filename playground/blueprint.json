@@ -42,24 +42,18 @@
 			}
 		},
 		{
-			"step": "copyDirectory",
-			"source": "plugins/woocommerce-subscriptions",
-			"destination": "/wordpress/wp-content/plugins/woocommerce-subscriptions"
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "url",
+				"url": "https://github-proxy.com/proxy/?repo=brentmackinnon/woodemo/tree/main/plugins/woocommerce-subscriptions"
+			}
 		},
 		{
-			"step": "activatePlugin",
-			"pluginName": "woocommerce-subscriptions",
-			"pluginPath": "woocommerce-subscriptions/woocommerce-subscriptions.php"
-		},
-		{
-			"step": "copyDirectory",
-			"source": "plugins/WC Smooth Generator",
-			"destination": "/wordpress/wp-content/plugins/wc-smooth-generator"
-		},
-		{
-			"step": "activatePlugin",
-			"pluginName": "wc-smooth-generator",
-			"pluginPath": "wc-smooth-generator/wc-smooth-generator.php"
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "url",
+				"url": "https://github-proxy.com/proxy/?repo=brentmackinnon/woodemo/tree/main/plugins/WC%20Smooth%20Generator"
+			}
 		},
 		{
 			"step": "runPHP",
@@ -82,5 +76,5 @@
 		"networking": true
 	},
 	"login": true,
-	"landingPage": "/wp-admin/"
+	"landingPage": "/"
 }
