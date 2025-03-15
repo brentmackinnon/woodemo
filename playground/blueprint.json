@@ -4,6 +4,10 @@
 		"php": "latest",
 		"wp": "latest"
 	},
+	"phpExtensions": [],
+	"phpConfigs": {
+		"error_reporting": "E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED"
+	},
 	"siteOptions": {
 		"blogname": "WordPress Playground Demo",
 		"blogdescription": "Your Premium Subscription Store",
@@ -40,6 +44,10 @@
 				"resource": "wordpress.org/plugins",
 				"slug": "woocommerce"
 			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php\nmkdir('/wordpress/wp-content/plugins/woocommerce-subscriptions', 0777, true);\nmkdir('/wordpress/wp-content/plugins/wc-smooth-generator', 0777, true);"
 		},
 		{
 			"step": "writeFile",
