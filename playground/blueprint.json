@@ -18,12 +18,28 @@
 				"resource": "wordpress.org/themes",
 				"name": "twentytwentyfive",
 				"activate": false,
-				"files": {}
+				"path": "/wordpress/wp-content/themes/twentytwentyfive"
 			}
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); \n$theme_dir = '/wordpress/wp-content/themes/twentytwentyfive-child';\nif (!file_exists($theme_dir)) {\n    mkdir($theme_dir, 0755, true);\n}\n\n// Create style.css\n$style_content = '/*\nTheme Name: Twenty Twenty-Five Child\nTheme URI: https://wordpress.org/themes/twentytwentyfive/\nTemplate: twentytwentyfive\nAuthor: Your Name\nAuthor URI: https://example.com\nDescription: Twenty Twenty-Five Child Theme with Meta Block Sidebar support\nVersion: 1.0.0\nLicense: GNU General Public License v2 or later\nLicense URI: http://www.gnu.org/licenses/gpl-2.0.html\nText Domain: twentytwentyfive-child\n*/';\nfile_put_contents($theme_dir . '/style.css', $style_content);\n\n// Create functions.php\n$functions_content = '<?php\nfunction twentytwentyfive_child_styles() {\n    wp_enqueue_style(\n        \\'twentytwentyfive-style\\',\n        get_template_directory_uri() . \\'/style.css\\',\n        array(),\n        wp_get_theme()->get(\\'Version\\')\n    );\n    wp_enqueue_style(\n        \\'twentytwentyfive-child-style\\',\n        get_stylesheet_uri(),\n        array(\\'twentytwentyfive-style\\'),\n        wp_get_theme()->get(\\'Version\\')\n    );\n}\nadd_action(\\'wp_enqueue_scripts\\', \\'twentytwentyfive_child_styles\\');\nadd_action(\\'enqueue_block_editor_assets\\', \\'twentytwentyfive_child_styles\\');';\nfile_put_contents($theme_dir . '/functions.php', $functions_content);\n\n// Create templates directory and single.html\n$templates_dir = $theme_dir . '/templates';\nif (!file_exists($templates_dir)) {\n    mkdir($templates_dir, 0755, true);\n}\n\n$single_content = '<!-- wp:group {\\"layout\\":{\\"type\\":\\"constrained\\"}} -->\n<div class=\\"wp-block-group\\">\n    <!-- wp:post-title {\\"level\\":1} />\n    <!-- wp:post-featured-image {\\"align\\":\\"wide\\"} />\n    <!-- wp:group {\\"layout\\":{\\"type\\":\\"flex\\",\\"flexWrap\\":\\"nowrap\\"}} -->\n    <div class=\\"wp-block-group\\">\n        <!-- wp:post-content {\\"layout\\":{\\"inherit\\":true}} />\n        <!-- wp:group {\\"className\\":\\"meta-block-sidebar\\"} -->\n        <div class=\\"wp-block-group meta-block-sidebar\\">\n            <!-- wp:meta-block-sidebar/team-field />\n            <!-- wp:meta-block-sidebar/join-date-field />\n        </div>\n        <!-- /wp:group -->\n    </div>\n    <!-- /wp:group -->\n</div>\n<!-- /wp:group -->';\nfile_put_contents($templates_dir . '/single.html', $single_content);"
+			"code": "<?php require_once('/wordpress/wp-load.php'); $theme_dir = '/wordpress/wp-content/themes/twentytwentyfive-child'; if (!file_exists($theme_dir)) { mkdir($theme_dir, 0755, true); }"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once('/wordpress/wp-load.php'); $theme_dir = '/wordpress/wp-content/themes/twentytwentyfive-child'; file_put_contents($theme_dir . '/style.css', '/*\nTheme Name: Twenty Twenty-Five Child\nTheme URI: https://wordpress.org/themes/twentytwentyfive/\nTemplate: twentytwentyfive\nAuthor: Your Name\nAuthor URI: https://example.com\nDescription: Twenty Twenty-Five Child Theme with Meta Block Sidebar support\nVersion: 1.0.0\nLicense: GNU General Public License v2 or later\nLicense URI: http://www.gnu.org/licenses/gpl-2.0.html\nText Domain: twentytwentyfive-child\n*/');"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once('/wordpress/wp-load.php'); $theme_dir = '/wordpress/wp-content/themes/twentytwentyfive-child'; file_put_contents($theme_dir . '/functions.php', '<?php\nfunction twentytwentyfive_child_styles() {\n    wp_enqueue_style(\n        \"twentytwentyfive-style\",\n        get_template_directory_uri() . \"/style.css\",\n        array(),\n        wp_get_theme()->get(\"Version\")\n    );\n    wp_enqueue_style(\n        \"twentytwentyfive-child-style\",\n        get_stylesheet_uri(),\n        array(\"twentytwentyfive-style\"),\n        wp_get_theme()->get(\"Version\")\n    );\n}\nadd_action(\"wp_enqueue_scripts\", \"twentytwentyfive_child_styles\");\nadd_action(\"enqueue_block_editor_assets\", \"twentytwentyfive_child_styles\");');"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once('/wordpress/wp-load.php'); $theme_dir = '/wordpress/wp-content/themes/twentytwentyfive-child'; $templates_dir = $theme_dir . '/templates'; if (!file_exists($templates_dir)) { mkdir($templates_dir, 0755, true); }"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once('/wordpress/wp-load.php'); $theme_dir = '/wordpress/wp-content/themes/twentytwentyfive-child'; $templates_dir = $theme_dir . '/templates'; file_put_contents($templates_dir . '/single.html', '<!-- wp:group {\"layout\":{\"type\":\"constrained\"}} -->\n<div class=\"wp-block-group\">\n    <!-- wp:post-title {\"level\":1} />\n    <!-- wp:post-featured-image {\"align\":\"wide\"} />\n    <!-- wp:group {\"layout\":{\"type\":\"flex\",\"flexWrap\":\"nowrap\"}} -->\n    <div class=\"wp-block-group\">\n        <!-- wp:post-content {\"layout\":{\"inherit\":true}} />\n        <!-- wp:group {\"className\":\"meta-block-sidebar\"} -->\n        <div class=\"wp-block-group meta-block-sidebar\">\n            <!-- wp:meta-block-sidebar/team-field />\n            <!-- wp:meta-block-sidebar/join-date-field />\n        </div>\n        <!-- /wp:group -->\n    </div>\n    <!-- /wp:group -->\n</div>\n<!-- /wp:group -->');"
 		},
 		{
 			"step": "installTheme",
@@ -31,12 +47,17 @@
 				"resource": "local",
 				"name": "twentytwentyfive-child",
 				"activate": true,
-				"path": "/wordpress/wp-content/themes/twentytwentyfive-child"
+				"path": "/wordpress/wp-content/themes/twentytwentyfive-child",
+				"files": {
+					"style.css": "/*\nTheme Name: Twenty Twenty-Five Child\nTheme URI: https://wordpress.org/themes/twentytwentyfive/\nTemplate: twentytwentyfive\nAuthor: Your Name\nAuthor URI: https://example.com\nDescription: Twenty Twenty-Five Child Theme with Meta Block Sidebar support\nVersion: 1.0.0\nLicense: GNU General Public License v2 or later\nLicense URI: http://www.gnu.org/licenses/gpl-2.0.html\nText Domain: twentytwentyfive-child\n*/",
+					"functions.php": "<?php\nfunction twentytwentyfive_child_styles() {\n    wp_enqueue_style(\n        \"twentytwentyfive-style\",\n        get_template_directory_uri() . \"/style.css\",\n        array(),\n        wp_get_theme()->get(\"Version\")\n    );\n    wp_enqueue_style(\n        \"twentytwentyfive-child-style\",\n        get_stylesheet_uri(),\n        array(\"twentytwentyfive-style\"),\n        wp_get_theme()->get(\"Version\")\n    );\n}\nadd_action(\"wp_enqueue_scripts\", \"twentytwentyfive_child_styles\");\nadd_action(\"enqueue_block_editor_assets\", \"twentytwentyfive_child_styles\");",
+					"templates/single.html": "<!-- wp:group {\"layout\":{\"type\":\"constrained\"}} -->\n<div class=\"wp-block-group\">\n    <!-- wp:post-title {\"level\":1} />\n    <!-- wp:post-featured-image {\"align\":\"wide\"} />\n    <!-- wp:group {\"layout\":{\"type\":\"flex\",\"flexWrap\":\"nowrap\"}} -->\n    <div class=\"wp-block-group\">\n        <!-- wp:post-content {\"layout\":{\"inherit\":true}} />\n        <!-- wp:group {\"className\":\"meta-block-sidebar\"} -->\n        <div class=\"wp-block-group meta-block-sidebar\">\n            <!-- wp:meta-block-sidebar/team-field />\n            <!-- wp:meta-block-sidebar/join-date-field />\n        </div>\n        <!-- /wp:group -->\n    </div>\n    <!-- /wp:group -->\n</div>\n<!-- /wp:group -->"
+				}
 			}
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); wp_insert_post(array( 'post_title' => 'Created by a Blueprint', 'post_content' => '<!-- wp:paragraph --><p>How do you update the meta fields?</p><!-- /wp:paragraph --><!-- wp:list --><ul><!-- wp:list-item --><li>Open the <strong>Settings</strong> sidebar by clicking the window icon next to the blue <strong>Update</strong> button.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Click the <strong>Meta Block Sidebar</strong> menu (below the <strong>Summary</strong> menu).</li><!-- /wp:list-item --><!-- wp:list-item --><li>Type the <strong>Team name</strong> and the <strong>date</strong> the person joined the company in the respective fields.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Click the blue <strong>Update</strong> button.</li><!-- /wp:list-item --></ul><!-- /wp:list -->','post_status' => 'publish' ));"
+			"code": "<?php require_once('/wordpress/wp-load.php'); wp_insert_post(array( \"post_title\" => \"Created by a Blueprint\", \"post_content\" => \"<!-- wp:paragraph --><p>How do you update the meta fields?</p><!-- /wp:paragraph --><!-- wp:list --><ul><!-- wp:list-item --><li>Open the <strong>Settings</strong> sidebar by clicking the window icon next to the blue <strong>Update</strong> button.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Click the <strong>Meta Block Sidebar</strong> menu (below the <strong>Summary</strong> menu).</li><!-- /wp:list-item --><!-- wp:list-item --><li>Type the <strong>Team name</strong> and the <strong>date</strong> the person joined the company in the respective fields.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Click the blue <strong>Update</strong> button.</li><!-- /wp:list-item --></ul><!-- /wp:list -->\", \"post_status\" => \"publish\"));"
 		}
 	],
 	"features": {
