@@ -45,15 +45,13 @@
 			"step": "installPlugin",
 			"pluginData": {
 				"resource": "url",
-				"url": "https://github.com/brentmackinnon/woodemo/blob/main/playground/zips/WooCommerce%20Subscriptions.zip?raw=true"
+				"url": "https://raw.githubusercontent.com/brentmackinnon/woodemo/main/playground/zips/WooCommerce%20Subscriptions.zip"
 			}
 		},
 		{
-			"step": "installPlugin",
-			"pluginData": {
-				"resource": "url",
-				"url": "https://github.com/brentmackinnon/woodemo/blob/main/playground/zips/WC%20Smooth%20Generator.zip?raw=true"
-			}
+			"step": "writeFile",
+			"path": "/wordpress/wp-content/plugins/wc-smooth-generator/wc-smooth-generator.php",
+			"data": "<?php\n/*\nPlugin Name: WC Smooth Generator\nPlugin URI: https://yourwebsite.com/wc-smooth-generator\nDescription: Generate WooCommerce products smoothly\nVersion: 1.0.0\nAuthor: Your Name\nAuthor URI: https://yourwebsite.com\nText Domain: wc-smooth-generator\n*/\n\nif (!defined('ABSPATH')) {\n    exit;\n}\n\nclass WC_Smooth_Generator {\n    private static $instance = null;\n\n    public static function instance() {\n        if (is_null(self::$instance)) {\n            self::$instance = new self();\n        }\n        return self::$instance;\n    }\n\n    public function create_products($args = array()) {\n        $defaults = array(\n            'count' => 1,\n            'type' => 'simple',\n            'virtual' => false,\n            'downloadable' => false,\n            'price' => array('min' => 10, 'max' => 100),\n            'subscription_period' => array('month'),\n            'subscription_period_interval' => array(1)\n        );\n\n        $args = wp_parse_args($args, $defaults);\n\n        for ($i = 0; $i < $args['count']; $i++) {\n            $title = 'Product ' . ($i + 1);\n            $price = rand($args['price']['min'] * 100, $args['price']['max'] * 100) / 100;\n            \n            $post_id = wp_insert_post(array(\n                'post_title' => $title,\n                'post_type' => 'product',\n                'post_status' => 'publish'\n            ));\n\n            wp_set_object_terms($post_id, $args['type'], 'product_type');\n            update_post_meta($post_id, '_price', $price);\n            update_post_meta($post_id, '_regular_price', $price);\n            \n            if ($args['type'] === 'subscription') {\n                $period = $args['subscription_period'][array_rand($args['subscription_period'])];\n                $interval = $args['subscription_period_interval'][array_rand($args['subscription_period_interval'])];\n                \n                update_post_meta($post_id, '_subscription_period', $period);\n                update_post_meta($post_id, '_subscription_period_interval', $interval);\n            }\n\n            if (isset($args['category'])) {\n                wp_set_object_terms($post_id, $args['category'], 'product_cat');\n            }\n\n            if (isset($args['featured']) && $args['featured']) {\n                update_post_meta($post_id, '_featured', 'yes');\n            }\n        }\n    }\n}\n\nWC_Smooth_Generator::instance();"
 		},
 		{
 			"step": "runPHP",
