@@ -14,8 +14,10 @@
 	"steps": [
 		{
 			"step": "installTheme",
-			"themeSlug": "twentytwentyfive",
-			"source": "wordpress.org"
+			"themeZipFile": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/brentmackinnon/woodemo/main/playground/zips/twentytwentyfive.zip"
+			}
 		},
 		{
 			"step": "runPHP",
