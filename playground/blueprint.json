@@ -5,7 +5,7 @@
 		"wp": "latest"
 	},
 	"siteOptions": {
-		"blogname": "WordPress Playground Demo"
+		"blogname": "WordPress Playground Demo - Twenty Twenty-Five"
 	},
 	"plugins": [
 		"create-block-theme",
@@ -14,10 +14,7 @@
 	"steps": [
 		{
 			"step": "installTheme",
-			"themeZipFile": {
-				"resource": "url",
-				"url": "https://raw.githubusercontent.com/wptrainingteam/playground-demo-handover/main/playground/zips/blue-note.zip"
-			}
+			"themeSlug": "twentytwentyfive"
 		},
 		{
 			"step": "runPHP",
