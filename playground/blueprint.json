@@ -4,89 +4,29 @@
 		"php": "latest",
 		"wp": "latest"
 	},
-	"phpExtensions": [],
-	"phpConfigs": {
-		"error_reporting": "E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED"
-	},
 	"siteOptions": {
-		"blogname": "WordPress Playground Demo",
-		"blogdescription": "Your Premium Subscription Store",
-		"woocommerce_shop_page_display": "subcategories",
-		"woocommerce_category_archive_display": "both",
-		"woocommerce_default_catalog_orderby": "popularity",
-		"woocommerce_catalog_columns": "3",
-		"woocommerce_catalog_rows": "4",
-		"show_on_front": "page",
-		"page_on_front": "{{home_page_id}}",
-		"page_for_posts": "{{blog_page_id}}",
-		"elementor_disable_color_schemes": "yes",
-		"elementor_disable_typography_schemes": "yes"
+		"blogname": "WordPress Playground Demo"
 	},
+	"plugins": [
+		"create-block-theme",
+		"https://raw.githubusercontent.com/wptrainingteam/playground-demo-handover/main/playground/zips/meta-block-sidebar.zip"
+	],
 	"steps": [
 		{
-			"step": "login",
-			"username": "admin",
-			"password": "password"
-		},
-		{
 			"step": "installTheme",
-			"themeData": {
-				"resource": "wordpress.org/themes",
-				"slug": "twentytwentyfive"
-			},
-			"options": {
-				"activate": true
-			}
-		},
-		{
-			"step": "installPlugin",
-			"pluginData": {
-				"resource": "wordpress.org/plugins",
-				"slug": "woocommerce"
+			"themeZipFile": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/wptrainingteam/playground-demo-handover/main/playground/zips/blue-note.zip"
 			}
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php\nmkdir('/wordpress/wp-content/plugins/woocommerce-subscriptions', 0777, true);\nmkdir('/wordpress/wp-content/plugins/wc-smooth-generator', 0777, true);"
-		},
-		{
-			"step": "writeFile",
-			"path": "/wordpress/wp-content/plugins/woocommerce-subscriptions/woocommerce-subscriptions.php",
-			"data": "<?php\n/*\nPlugin Name: WooCommerce Subscriptions\nPlugin URI: https://woocommerce.com/products/woocommerce-subscriptions/\nDescription: Adds subscription functionality to WooCommerce.\nVersion: 1.0.0\nAuthor: Your Name\nAuthor URI: https://yourwebsite.com\nText Domain: woocommerce-subscriptions\nDomain Path: /languages\n\nWC requires at least: 3.0\nWC tested up to: 8.0\nWooCommerce: true\n*/\n\nif (!defined('ABSPATH')) {\n    exit;\n}\n\nclass WC_Subscriptions {\n    public static function init() {\n        add_action('plugins_loaded', array(__CLASS__, 'init_subscriptions'));\n    }\n\n    public static function init_subscriptions() {\n        if (!class_exists('WooCommerce')) {\n            return;\n        }\n        // Basic subscription functionality\n        add_filter('woocommerce_product_class', array(__CLASS__, 'add_subscription_product_class'), 10, 2);\n    }\n\n    public static function add_subscription_product_class($classname, $product_type) {\n        if ($product_type === 'subscription') {\n            $classname = 'WC_Product_Subscription';\n        }\n        return $classname;\n    }\n}\n\nWC_Subscriptions::init();"
-		},
-		{
-			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); activate_plugin('woocommerce-subscriptions/woocommerce-subscriptions.php');"
-		},
-		{
-			"step": "writeFile",
-			"path": "/wordpress/wp-content/plugins/wc-smooth-generator/wc-smooth-generator.php",
-			"data": "<?php\n/*\nPlugin Name: WC Smooth Generator\nPlugin URI: https://yourwebsite.com/wc-smooth-generator\nDescription: Generate WooCommerce products smoothly\nVersion: 1.0.0\nAuthor: Your Name\nAuthor URI: https://yourwebsite.com\nText Domain: wc-smooth-generator\n*/\n\nif (!defined('ABSPATH')) {\n    exit;\n}\n\nclass WC_Smooth_Generator {\n    private static $instance = null;\n\n    public static function instance() {\n        if (is_null(self::$instance)) {\n            self::$instance = new self();\n        }\n        return self::$instance;\n    }\n\n    public function create_products($args = array()) {\n        $defaults = array(\n            'count' => 1,\n            'type' => 'simple',\n            'virtual' => false,\n            'downloadable' => false,\n            'price' => array('min' => 10, 'max' => 100),\n            'subscription_period' => array('month'),\n            'subscription_period_interval' => array(1)\n        );\n\n        $args = wp_parse_args($args, $defaults);\n\n        for ($i = 0; $i < $args['count']; $i++) {\n            $title = 'Product ' . ($i + 1);\n            $price = rand($args['price']['min'] * 100, $args['price']['max'] * 100) / 100;\n            \n            $post_id = wp_insert_post(array(\n                'post_title' => $title,\n                'post_type' => 'product',\n                'post_status' => 'publish'\n            ));\n\n            wp_set_object_terms($post_id, $args['type'], 'product_type');\n            update_post_meta($post_id, '_price', $price);\n            update_post_meta($post_id, '_regular_price', $price);\n            \n            if ($args['type'] === 'subscription') {\n                $period = $args['subscription_period'][array_rand($args['subscription_period'])];\n                $interval = $args['subscription_period_interval'][array_rand($args['subscription_period_interval'])];\n                \n                update_post_meta($post_id, '_subscription_period', $period);\n                update_post_meta($post_id, '_subscription_period_interval', $interval);\n            }\n\n            if (isset($args['category'])) {\n                wp_set_object_terms($post_id, $args['category'], 'product_cat');\n            }\n\n            if (isset($args['featured']) && $args['featured']) {\n                update_post_meta($post_id, '_featured', 'yes');\n            }\n        }\n    }\n}\n\nWC_Smooth_Generator::instance();"
-		},
-		{
-			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); activate_plugin('wc-smooth-generator/wc-smooth-generator.php');"
-		},
-		{
-			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); $terms = array('Digital Services' => array('Software Subscriptions', 'Cloud Storage', 'Professional Services'), 'Entertainment' => array('Streaming Services', 'Gaming', 'Educational Content'), 'Business' => array('Team Plans', 'Enterprise Solutions', 'Support Packages')); foreach($terms as $parent => $children) { $parent_term = wp_insert_term($parent, 'product_cat'); if(!is_wp_error($parent_term)) { foreach($children as $child) { wp_insert_term($child, 'product_cat', array('parent' => $parent_term['term_id'])); } } }"
-		},
-		{
-			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); WC_Smooth_Generator::instance()->create_products(['count' => 3, 'type' => 'subscription', 'downloadable' => false, 'virtual' => true, 'price' => ['min' => 99.99, 'max' => 299.99], 'subscription_period' => ['month', 'year'], 'subscription_period_interval' => [1, 12], 'category' => 'Enterprise Solutions', 'featured' => true]);"
-		},
-		{
-			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); WC_Smooth_Generator::instance()->create_products(['count' => 15, 'type' => 'subscription', 'downloadable' => false, 'virtual' => true, 'price' => ['min' => 9.99, 'max' => 99.99], 'subscription_period' => ['day', 'week', 'month', 'year'], 'subscription_period_interval' => [1, 3, 6, 12]]);"
-		},
-		{
-			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); $home = wp_insert_post(array('post_title' => 'Home', 'post_content' => '<!-- wp:group {\"align\":\"full\",\"style\":{\"spacing\":{\"padding\":{\"right\":\"var:preset|spacing|50\",\"left\":\"var:preset|spacing|50\",\"top\":\"var:preset|spacing|60\",\"bottom\":\"var:preset|spacing|60\"}},\"color\":{\"gradient\":\"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%)\"}},\"layout\":{\"type\":\"constrained\"}} --><div class=\"wp-block-group alignfull has-background\" style=\"background:linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--50)\"><!-- wp:heading {\"textAlign\":\"center\",\"level\":1,\"style\":{\"typography\":{\"fontSize\":\"clamp(3rem, 6vw, 4rem)\"},\"color\":{\"text\":\"#ffffff\"}}} --><h1 class=\"wp-block-heading has-text-align-center\" style=\"color:#ffffff;font-size:clamp(3rem, 6vw, 4rem)\">Premium Digital Subscriptions</h1><!-- /wp:heading --><!-- wp:paragraph {\"align\":\"center\",\"style\":{\"color\":{\"text\":\"#ffffff\"}}} --><p class=\"has-text-align-center\" style=\"color:#ffffff\">Discover our curated collection of digital services and subscriptions</p><!-- /wp:paragraph --></div><!-- /wp:group --><!-- wp:woocommerce/product-new {\"columns\":3,\"rows\":1,\"alignButtons\":true,\"contentVisibility\":{\"image\":true,\"title\":true,\"price\":true,\"rating\":true,\"button\":true}} /--><!-- wp:heading {\"textAlign\":\"center\",\"style\":{\"spacing\":{\"margin\":{\"top\":\"var:preset|spacing|40\"}}}} --><h2 class=\"wp-block-heading has-text-align-center\" style=\"margin-top:var(--wp--preset--spacing--40)\">Browse by Category</h2><!-- /wp:heading --><!-- wp:woocommerce/product-categories {\"hasCount\":true,\"hasImage\":true,\"hasEmpty\":false,\"className\":\"has-text-align-center\"} /-->', 'post_status' => 'publish', 'post_type' => 'page')); update_option('page_on_front', $home); update_option('show_on_front', 'page');"
+			"code": "<?php require_once('/wordpress/wp-load.php'); wp_insert_post(array( 'post_title' => 'Created by a Blueprint', 'post_content' => '<!-- wp:paragraph --><p>How do you update the meta fields?</p><!-- /wp:paragraph --><!-- wp:list --><ul><!-- wp:list-item --><li>Open the <strong>Settings</strong> sidebar by clicking the window icon next to the blue <strong>Update</strong> button.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Click the <strong>Meta Block Sidebar</strong> menu (below the <strong>Summary</strong> menu).</li><!-- /wp:list-item --><!-- wp:list-item --><li>Type the <strong>Team name</strong> and the <strong>date</strong> the person joined the company in the respective fields.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Click the blue <strong>Update</strong> button.</li><!-- /wp:list-item --></ul><!-- /wp:list -->','post_status' => 'publish' ));"
 		}
 	],
 	"features": {
 		"networking": true
 	},
 	"login": true,
-	"landingPage": "/"
+	"landingPage": "/?p=4"
 }
