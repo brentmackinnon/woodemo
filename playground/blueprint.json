@@ -14,7 +14,7 @@
 	"steps": [
 		{
 			"step": "installTheme",
-			"themeZipFile": {
+			"themeData": {
 				"resource": "url",
 				"url": "https://raw.githubusercontent.com/brentmackinnon/woodemo/main/playground/zips/twentytwentyfive.zip"
 			}
