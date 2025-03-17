@@ -14,7 +14,10 @@
 	"steps": [
 		{
 			"step": "installTheme",
-			"themeSlug": "twentytwentyfive"
+			"themeZipFile": {
+				"resource": "url",
+				"url": "https://downloads.wordpress.org/theme/twentytwentyfive.1.1.zip"
+			}
 		},
 		{
 			"step": "runPHP",
