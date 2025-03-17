@@ -5,7 +5,7 @@
 		"wp": "latest"
 	},
 	"siteOptions": {
-		"blogname": "My WordPress Playground"
+		"blogname": "Brent's Woo Demo"
 	},
 	"plugins": [
 		{
@@ -23,7 +23,7 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); wp_insert_post(array( 'post_title' => 'Welcome', 'post_content' => '<!-- wp:heading {\"level\":1} --><h1>Welcome to My Site</h1><!-- /wp:heading --><!-- wp:paragraph --><p>Hi there! I\\'m currently working on building something cool with WordPress Playground. Stay tuned for updates!</p><!-- /wp:paragraph -->', 'post_status' => 'publish', 'post_type' => 'page' )); update_option('show_on_front', 'page'); update_option('page_on_front', 1);"
+			"code": "<?php require_once('/wordpress/wp-load.php'); $product_id = wp_insert_post(array('post_title' => 'Demo Product', 'post_content' => 'This is a fantastic demo product to showcase WooCommerce functionality.', 'post_status' => 'publish', 'post_type' => 'product')); update_post_meta($product_id, '_price', '29.99'); update_post_meta($product_id, '_regular_price', '29.99'); update_post_meta($product_id, '_visibility', 'visible'); update_post_meta($product_id, '_stock_status', 'instock'); update_post_meta($product_id, '_virtual', 'no'); wp_insert_post(array('post_title' => 'Welcome to Brents Woo Demo', 'post_content' => '<!-- wp:heading {\"level\":1,\"align\":\"wide\"} --><h1 class=\"alignwide\">Welcome to My WooCommerce Store</h1><!-- /wp:heading --><!-- wp:paragraph --><p>Check out our featured product below!</p><!-- /wp:paragraph --><!-- wp:woocommerce/featured-product {\"productId\":' . $product_id . '} /--><!-- wp:buttons {\"align\":\"wide\"} --><div class=\"wp-block-buttons alignwide\"><!-- wp:button {\"backgroundColor\":\"vivid-cyan-blue\"} --><div class=\"wp-block-button\"><a class=\"wp-block-button__link has-vivid-cyan-blue-background-color has-background\" href=\"/shop\">Visit Shop</a></div><!-- /wp:button --></div><!-- /wp:buttons -->', 'post_status' => 'publish', 'post_type' => 'page')); update_option('show_on_front', 'page'); update_option('page_on_front', 1); update_option('woocommerce_store_setup_complete', 'yes'); update_option('woocommerce_default_country', 'US:CA'); update_option('woocommerce_currency', 'USD'); update_option('woocommerce_currency_pos', 'left');"
 		}
 	],
 	"features": {
