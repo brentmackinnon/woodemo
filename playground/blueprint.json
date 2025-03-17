@@ -5,12 +5,9 @@
 		"wp": "latest"
 	},
 	"siteOptions": {
-		"blogname": "WordPress Playground Demo - Twenty Twenty-Five"
+		"blogname": "My WordPress Playground"
 	},
-	"plugins": [
-		"create-block-theme",
-		"https://raw.githubusercontent.com/wptrainingteam/playground-demo-handover/main/playground/zips/meta-block-sidebar.zip"
-	],
+	"plugins": [],
 	"steps": [
 		{
 			"step": "installTheme",
@@ -21,12 +18,12 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php require_once('/wordpress/wp-load.php'); wp_insert_post(array( 'post_title' => 'Created by a Blueprint', 'post_content' => '<!-- wp:paragraph --><p>How do you update the meta fields?</p><!-- /wp:paragraph --><!-- wp:list --><ul><!-- wp:list-item --><li>Open the <strong>Settings</strong> sidebar by clicking the window icon next to the blue <strong>Update</strong> button.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Click the <strong>Meta Block Sidebar</strong> menu (below the <strong>Summary</strong> menu).</li><!-- /wp:list-item --><!-- wp:list-item --><li>Type the <strong>Team name</strong> and the <strong>date</strong> the person joined the company in the respective fields.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Click the blue <strong>Update</strong> button.</li><!-- /wp:list-item --></ul><!-- /wp:list -->','post_status' => 'publish' ));"
+			"code": "<?php require_once('/wordpress/wp-load.php'); wp_insert_post(array( 'post_title' => 'Welcome', 'post_content' => '<!-- wp:heading {\"level\":1} --><h1>Welcome to My Site</h1><!-- /wp:heading --><!-- wp:paragraph --><p>Hi there! I\\'m currently working on building something cool with WordPress Playground. Stay tuned for updates!</p><!-- /wp:paragraph -->', 'post_status' => 'publish', 'post_type' => 'page' )); update_option('show_on_front', 'page'); update_option('page_on_front', 1);"
 		}
 	],
 	"features": {
 		"networking": true
 	},
 	"login": true,
-	"landingPage": "/?p=4"
+	"landingPage": "/"
 }
