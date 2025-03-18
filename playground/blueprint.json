@@ -21,11 +21,7 @@
 		},
 		{
 			"step": "installPlugin",
-			"pluginData": {
-				"resource": "url",
-				"url": "https://downloads.wordpress.org/plugin/woocommerce.8.5.1.zip"
-			},
-			"pluginPath": "woocommerce"
+			"pluginZip": "https://downloads.wordpress.org/plugin/woocommerce.8.5.1.zip"
 		},
 		{
 			"step": "activatePlugin",
