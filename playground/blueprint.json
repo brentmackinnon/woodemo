@@ -16,7 +16,7 @@
 		{
 			"step": "installPlugin",
 			"pluginData": {
-				"resource": "plugin",
+				"resource": "wordpress.org/plugins",
 				"slug": "woocommerce"
 			}
 		},
