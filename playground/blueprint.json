@@ -9,9 +9,8 @@
 	},
 	"plugins": [
 		{
-			"name": "woocommerce",
-			"version": "8.5.1",
-			"downloadUrl": "https://downloads.wordpress.org/plugin/woocommerce.8.5.1.zip"
+			"resource": "url",
+			"url": "https://downloads.wordpress.org/plugin/woocommerce.8.5.1.zip"
 		}
 	],
 	"steps": [
